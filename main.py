@@ -58,8 +58,8 @@ while True:
         match = re.findall(r"var json_product = (.*\"});", html)
         logging.info(f"JSON parsed.")
         if match:
-            json = json.loads(match[0])
-            if json.get('available', ''):
+            json_match = json.loads(match[0])
+            if json_match.get('available', ''):
                 logging.info("Item is in stock")
 
                 if db.get(url) == datetime.today().strftime('%Y-%m-%d'):
