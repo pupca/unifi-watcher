@@ -2,3 +2,5 @@
 venv/
 log.html
 unifyGuard.db
+debug.log
+unifi-watcher.tar
