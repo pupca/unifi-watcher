@@ -29,7 +29,7 @@ botToken = os.environ.get("BOT_TOKEN")
 timeOut = os.getenv("TIMEOUT", "60")
 variantId = os.getenv("VARIANT", False)
 s = requests.Session()
-db = pickledb.load('unifyGuard.db', True)
+db = pickledb.load('unifiGuard.db', True)
 url = os.environ.get("ITEM_URL")
 itemName = os.getenv("ITEM_NAME", "")
 
@@ -66,13 +66,19 @@ while True:
                 variants = json_match.get("variants", [])
                 variant = False
                 for var in variants:
-                    if variantId == var.get('id', ''):
+                    if variantId == str(var.get('id', '')):
                         variant = var
 
                 if variant:
+                    logging.info(
+                        f"Variant for item {itemName} with id:'{variantId}' found.")
                     if variant.get('available', False):
+                        logging.info(
+                            f"Item {itemName} with id:'{variantId}' is availible to purchase.")
                         available = True
                 else:
+                    logging.error(
+                        f"Error watching item {itemName}. Variant {variantId} was not found on the request page.")
                     if db.get('variant_error') != datetime.today().strftime('%Y-%m-%d'):
                         db.set('variant_error',
                                datetime.today().strftime('%Y-%m-%d'))
@@ -103,5 +109,5 @@ while True:
             db.set('error', datetime.today().strftime('%Y-%m-%d'))
             bot.sendMessage(os.environ.get("BOT_CHAT"),
                             f"Error watching item {itemName}. Error:'{sys.exc_info()[0]}' check the logs.")
-
+    logging.info(f"Waiting {timeOut}s before trying it again.")
     time.sleep(int(timeOut))
