@@ -29,7 +29,7 @@ botToken = os.environ.get("BOT_TOKEN")
 timeOut = os.getenv("TIMEOUT", "60")
 variantId = os.getenv("VARIANT", False)
 s = requests.Session()
-db = pickledb.load('unifiGuard.db', True)
+db = pickledb.load('unifyGuard.db', True)
 url = os.environ.get("ITEM_URL")
 itemName = os.getenv("ITEM_NAME", "")
 
