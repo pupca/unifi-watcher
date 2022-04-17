@@ -39,7 +39,7 @@ logging.info(
 
 while True:
     try:
-        logging.info(f"Getting the item url.")
+        logging.info(f"Getting {itemName} store url.")
         response = s.get(url)
         html = response.content.decode("utf-8")
         logging.info(
